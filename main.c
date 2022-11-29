@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) { // argv = [ejecutable, archivo de entrada, ar
   //     List aux = suggestions->elems[i];
   //     while (aux != NULL) {
   //     // printf("palabra: |%s|\n", ((SuggestionPointer)(suggestions->elems[i]->elem))->word);
-  //     // printf("palabra: |%s|\n", ((SuggestionPointer)(aux->elem))->word);
+  //     printf("palabra: |%s|\n", ((SuggestionPointer)(aux->elem))->word);
   //     printf("sugerencias: ");
   //     for (int j = 0; j < ((SuggestionPointer)(aux->elem))->lenSuggestions; j++) {
   //       printf("|%s|, ", ((SuggestionPointer)(aux->elem))->suggestions[j]);

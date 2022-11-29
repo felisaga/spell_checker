@@ -27,7 +27,6 @@ HashTable readDictionary(HashTable table, char* path) {
       wordBuff[i] = '\0';
       char *word = malloc(sizeof(char) * (i + 1));
       strcpy(word, wordBuff);
-      // table = addElementToTable(table, word, i + 1, 0);
       table = addWordToTable(table, word, i + 1, 0);
       i = 0;
     }
@@ -46,21 +45,19 @@ HashTable readSuggestions(HashTable table, char* path) {
   }
   int i = 0, flag = 1, wordFlag = 1, len = 0, wordLen = 0;
   char wordBuff[MAX_WORD_LENGTH], c;
-  // char **array = NULL;
   char **array = calloc(1,sizeof(char*));
   char *word = malloc(sizeof(char));
 
   while(flag) {
     c = getc(f);
-    // printf("|%c| -- %d\n", c, c);
-    if(c != ',' && c != '\n' && c != 13 && c != EOF && c != 10 && c != ' ') {
-      wordBuff[i++] = c;
-    } else if (c != ' ') {//10 inicio de linea - 13 retorno de linea //' ' despues de la coma
+    if(c != ',' && c != '\n' && c != 13 && c != EOF && c != 10) {
+      if(c == ' ' && i != 0) wordBuff[i++] = c;       //para evitar los espacios despues de la coma
+      else if(c != ' ') wordBuff[i++] = c;
+    } else if (c != ' ') {                            //10 inicio de linea - 13 retorno de linea //' ' despues de la coma
       wordBuff[i] = '\0';
       if(wordFlag) {
         word = realloc(word, sizeof(char) * (i + 1));
-      // char *word = malloc(sizeof(char) * (i + 1));
-      strcpy(word, wordBuff);
+        strcpy(word, wordBuff);
         wordLen = i + 1;
         i = 0;
         wordFlag = 0;
@@ -71,19 +68,22 @@ HashTable readSuggestions(HashTable table, char* path) {
         len ++;
         i = 0;
       }
-    } 
+    }
     // else {
-    if(c == '\n' || c == 13 || c == 10) { //si encuentra un \n o retorno de carro
+    if(c == '\n' || c == 13 || c == 10 || c == EOF) { //si encuentra un \n o retorno de carro
       table = addSuggestionToTable(table, word, array, len, wordLen, 1);      
       len = 0;
       wordFlag = 1;
-      word = malloc(sizeof(char));
+      word = malloc(sizeof(char));                    //para las siguientes sugerencias que pueda haber
       array = calloc(1,sizeof(char*));
     } 
-    if(c == EOF) flag = 0;
+    if(c == EOF) {
+      flag = 0;
+      free(word);                                     //si no hay mas sugerencias
+      free(array[0]);
+      free(array);
+    }
   }
-
-
   fclose(f);
   return table;
 }
