@@ -3,6 +3,8 @@
 
 #include "./hash.h"
 
+#define MAX_WORD_LENGTH 45
+
 // A partir del archivo diccionario guarda las palabras en una tabla hash
 HashTable readDictionary(HashTable table, char *path);
 

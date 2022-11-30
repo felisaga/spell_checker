@@ -12,6 +12,17 @@ typedef struct Suggestion {
 
 typedef Suggestion *SuggestionPointer;
 
+typedef struct _Recommendation { 
+  char *word;
+  char **recommendations;
+  int lenRecommendations;
+  int line;
+  int new;
+  struct _Recommendation *next;
+} Recommendation;
+
+typedef Recommendation *RecommendationList;
+
 // Crea una sugerencia para guardar en la lista
 void *createSuggestion(char *word, char **suggestions, int suggestionsLen);
 
@@ -27,5 +38,16 @@ void deleteSuggestions(SuggestionPointer elem);
 // Agrega una sugerencia a la lista de sugerencias
 char** addSuggestion(char **suggestions, char* suggestion, int len);
 
+// Se fija si una palabra tiene sugerencias en la tabla
+SuggestionPointer inSuggestions(HashTable suggestions, char *word, int wordLen);
+
+// Se fija si una palabra tiene sugerencias en la lista
+SuggestionPointer inSuggestionsList(List list, char *word, unsigned int hash);
+
+// Agrega una recomendacion a la lista de recomendaciones
+void addToRecommendations(RecommendationList list, char *word, char **recommendations, int lenRecommendations, int line, int new);
+
+// Elimina el espacio ocupado por la lista de recomendaciones
+void freeRecommendations(RecommendationList list);
 
 #endif

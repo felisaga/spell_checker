@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
 // #include "../headers/hash.h"
 #include "../headers/words.h"
 #include "../headers/suggestions.h"
-
-#define MAX_WORD_LENGTH 100
+#include "../headers/io.h"
 
 HashTable readDictionary(HashTable table, char* path) {
 	FILE *f = fopen(path, "rb");

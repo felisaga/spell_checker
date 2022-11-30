@@ -69,20 +69,9 @@ HashTable createHashTable(unsigned int len, int type) {
   return table;
 }
 
-// HashTable addElementToTable(HashTable table, char *word, int wordLen, int type) {
-//   unsigned int hash = murmur3_32(word, wordLen);
-//   unsigned int index = hash % table->length;
-//   table->elems[index] = addElementToList(table->elems[index], word, wordLen, hash, table->chargeFactor, table->length, type);
-
-//   if(*(table->chargeFactor) > 0.7) table = rehashTable(table, type);
-
-//   return table;
-// }
-
 void deleteTable(HashTable table, int type) {
   for(int i = 0; i < table->length; i++) {
     deleteList(table->elems[i], type);
-    // free(table->elems[i]);
   }
   free(table->elems);
   free(table->chargeFactor);
@@ -97,9 +86,6 @@ HashTable rehashTable(HashTable table, int type) {
     if(table->elems[i] != NULL) {
       List aux = table->elems[i];
       while(aux != NULL) {
-        // unsigned int hash = murmur3_32(aux->elem, aux->len);
-        // unsigned int index = hash % newLength;
-        // newTable->elems[index] = addElementToList(newTable->elems[index], aux->elem, aux->len, hash, table->chargeFactor, newLength);
         if (!type) {
           char *copy = malloc(sizeof(char) * aux->len);
           strcpy(copy, ((WordPointer)(aux->elem))->word);
@@ -113,13 +99,6 @@ HashTable rehashTable(HashTable table, int type) {
           }
           newTable = addSuggestionToTable(newTable, copy, array, ((SuggestionPointer)(aux->elem))->lenSuggestions, aux->len, type);
         }
-        // char *copy = malloc(sizeof(char) * aux->len);
-        // strcpy(copy, ((WordPointer)(aux->elem))->word);
-        // if (!type) {
-        //   newTable = addWordToTable(newTable, copy, aux->len, type);
-        // } else {
-        //   newTable = addSuggestionToTable(newTable, copy, aux->len, type);
-        // }
         aux = aux->next;
       }
     }
