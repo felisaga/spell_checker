@@ -45,9 +45,14 @@ SuggestionPointer inSuggestions(HashTable suggestions, char *word, int wordLen);
 SuggestionPointer inSuggestionsList(List list, char *word, unsigned int hash);
 
 // Agrega una recomendacion a la lista de recomendaciones
-void addToRecommendations(RecommendationList list, char *word, char **recommendations, int lenRecommendations, int line, int new);
+RecommendationList addToRecommendations(RecommendationList list, char *word, char **recommendations, int lenRecommendations, int line, int new);
 
 // Elimina el espacio ocupado por la lista de recomendaciones
 void freeRecommendations(RecommendationList list);
+
+char** addWordToReccomendation(char **recommedations, char *word, int *lenRecommendations);
+
+void deleteRecommendations(RecommendationList list);
+
 
 #endif

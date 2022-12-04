@@ -1,5 +1,6 @@
 {
   "files.associations": {
-    "suggestions.h": "c"
+    "suggestions.h": "c",
+    "hash.h": "c"
   }
 }

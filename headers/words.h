@@ -23,7 +23,7 @@ HashTable addWordToTable(HashTable table, char *word, int wordLen, int type);
 void deleteWord(WordPointer elem);
 
 // Se fija si una palabra esta dentro del diccionario
-int inDicctionary(HashTable dicc, char *word, int wordLen);
+int inDictionary(HashTable dicc, char *word, int wordLen);
 
 // Se fija si una palabra esta dentro de una lista de palabras
 int inWordList(List list, char *word, unsigned int hash);

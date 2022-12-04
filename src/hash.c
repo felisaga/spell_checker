@@ -71,11 +71,17 @@ HashTable createHashTable(unsigned int len, int type) {
 
 void deleteTable(HashTable table, int type) {
   for(int i = 0; i < table->length; i++) {
+    // printf("1\n");
     deleteList(table->elems[i], type);
+    // printf("2\n");
   }
+  // printf("3\n");
   free(table->elems);
+  // printf("4\n");
   free(table->chargeFactor);
+  // printf("5\n");
   free(table);
+  // printf("6\n");
 }
 
 HashTable rehashTable(HashTable table, int type) {
@@ -87,11 +93,11 @@ HashTable rehashTable(HashTable table, int type) {
       List aux = table->elems[i];
       while(aux != NULL) {
         if (!type) {
-          char *copy = malloc(sizeof(char) * aux->len);
+          char *copy = malloc(sizeof(char) * (aux->len + 1));
           strcpy(copy, ((WordPointer)(aux->elem))->word);
           newTable = addWordToTable(newTable, copy, aux->len, type);
         } else {
-          char *copy = malloc(sizeof(char) * aux->len);
+          char *copy = malloc(sizeof(char) * (aux->len + 1));
           strcpy(copy, ((SuggestionPointer)(aux->elem))->word);
           char **array = malloc(sizeof(char*) * ((SuggestionPointer)(aux->elem))->lenSuggestions);
           for(int i = 0; i < ((SuggestionPointer)(aux->elem))->lenSuggestions; i++) {

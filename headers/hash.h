@@ -3,6 +3,9 @@
 
 #include <stdint.h>
 
+#define INITIAL_DICC_LENGTH 100000
+#define INITIAL_SUGG_LENGTH 10000
+
 typedef struct _Node {
   void *elem; //op1) char* op2) char* + char** + int 
   // char *elem;

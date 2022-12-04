@@ -9,7 +9,7 @@
 #include "../headers/io.h"
 
 HashTable readDictionary(HashTable table, char* path) {
-	FILE *f = fopen(path, "rb");
+	FILE *f = fopen("./dictionary.txt", "rb");
   if (f == NULL) { // si no se puede abrir el diccionario devuelvo NULL
 		printf("Error al abrir el diccionario.\n");
     return NULL;
@@ -27,7 +27,7 @@ HashTable readDictionary(HashTable table, char* path) {
       wordBuff[i] = '\0';
       char *word = malloc(sizeof(char) * (i + 1));
       strcpy(word, wordBuff);
-      table = addWordToTable(table, word, i + 1, 0);
+      table = addWordToTable(table, word, i, 0);
       i = 0;
     }
     if(c == EOF) flag = 0;
@@ -38,7 +38,7 @@ HashTable readDictionary(HashTable table, char* path) {
 }
 
 HashTable readSuggestions(HashTable table, char* path) {
-  FILE *f = fopen(path, "rb");
+  FILE *f = fopen("./suggestions.txt", "rb");
   if (f == NULL) { // si no se puede abrir el archivo de sugerencias devuelvo NULL
 		printf("Error al abrir el archivo de sugerencias.\n");
     return NULL;
@@ -71,7 +71,7 @@ HashTable readSuggestions(HashTable table, char* path) {
     }
     // else {
     if(c == '\n' || c == 13 || c == 10 || c == EOF) { //si encuentra un \n o retorno de carro
-      table = addSuggestionToTable(table, word, array, len, wordLen, 1);      
+      table = addSuggestionToTable(table, word, array, len, wordLen-1, 1);
       len = 0;
       wordFlag = 1;
       word = malloc(sizeof(char));                    //para las siguientes sugerencias que pueda haber
@@ -87,3 +87,33 @@ HashTable readSuggestions(HashTable table, char* path) {
   fclose(f);
   return table;
 }
+
+void printRecommendations(RecommendationList list, char *path) {
+  if(list == NULL) return;
+  FILE *corrections = fopen("./corrections.txt", "w");
+  FILE *suggestions = fopen(path, "a+");
+  RecommendationList aux = list;
+  while (aux != NULL) {
+    fprintf(corrections, "Linea %d, \"%s\" no esta en el diccionario.", aux->line, aux->word);
+    if(aux->recommendations == NULL) {
+      fprintf(corrections, "\nNo se encontraron sugerencias.\n");
+    } else {
+      if(aux->new) fprintf(suggestions, "\n%s, ", aux->word);
+      fprintf(corrections, "\nQuizas quiso decir: ");
+      for (int i = 0; i < aux->lenRecommendations-1; i++) {
+        fprintf(corrections,"%s, ", aux->recommendations[i]);
+        if(aux->new) fprintf(suggestions,"%s, ", aux->recommendations[i]);
+      }
+      fprintf(corrections,"%s\n", aux->recommendations[aux->lenRecommendations - 1]);
+      if(aux->new) fprintf(suggestions,"%s", aux->recommendations[aux->lenRecommendations - 1]);
+    }
+    aux = aux->next;
+  }
+  fclose(corrections);
+  fclose(suggestions);
+}
+
+// void printNewSuggestions(RecommendationList list, char *path) {
+//   FILE *f = fopen(path, "a+");
+//   fclose(f);
+// }

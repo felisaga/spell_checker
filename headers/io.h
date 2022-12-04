@@ -2,6 +2,7 @@
 #define __IO_H_
 
 #include "./hash.h"
+#include "../headers/suggestions.h"
 
 #define MAX_WORD_LENGTH 45
 
@@ -10,5 +11,7 @@ HashTable readDictionary(HashTable table, char *path);
 
 // A partir del archivo de sugerencias las guarda en una tabla hash
 HashTable readSuggestions(HashTable table, char* path);
+
+void printRecommendations(RecommendationList list, char *path);
 
 #endif
