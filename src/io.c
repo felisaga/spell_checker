@@ -50,12 +50,12 @@ HashTable readSuggestions(HashTable table, char* path) {
 
   while(flag) {
     c = getc(f);
-    if(c == 10 && i == 0) continue;
+    if(c == 10 && i == 0) continue;                               //para evitar crear una sugerencia cuando el archivo esta vacio
     if(c == EOF && i == 0) {free(word); break;}
     if(c != ',' && c != '\n' && c != 13 && c != EOF && c != 10) { //10 inicio de linea - 13 retorno de linea
-      if(c == ' ' && i != 0) wordBuff[i++] = c;       //para evitar los espacios despues de la coma
+      if(c == ' ' && i != 0) wordBuff[i++] = c;                   //para evitar los espacios despues de la coma
       else if(c != ' ') wordBuff[i++] = c;
-    } else if (c != ' ' && i != 0) {                            //' ' despues de la coma
+    } else if (c != ' ' && i != 0) {                              //' ' despues de la coma
       wordBuff[i] = '\0';
       if(wordFlag) {
         word = realloc(word, sizeof(char) * (i + 1));
