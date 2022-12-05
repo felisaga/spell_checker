@@ -1,3 +1,7 @@
-*.txt
+corrections.txt
+input.txt
+output.txt
+dictionary.txt
+suggestions.txt
 *.out
 .vscode

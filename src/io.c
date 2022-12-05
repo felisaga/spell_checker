@@ -20,9 +20,9 @@ HashTable readDictionary(HashTable table, char* path) {
   while(flag) {
     c = getc(f);
     if(c != '\n' && c != EOF && c != 13) {
-		  wordBuff[i++] = tolower(c);
+      if(c != 10) wordBuff[i++] = tolower(c);
     }
-    else if (c != 10) {                               //10 inicio de linea
+    else {                               //10 inicio de linea
       wordBuff[i] = '\0';
       char *word = malloc(sizeof(char) * (i + 1));
       strcpy(word, wordBuff);

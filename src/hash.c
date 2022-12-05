@@ -62,8 +62,7 @@ HashTable createHashTable(unsigned int len, int type) {
   table->elems = calloc(len, sizeof(List));
   table->length = len;
   table->chargeFactor = malloc(sizeof(float));
-  // *table->chargeFactor = 0.000001; //
-  *table->chargeFactor = 0.0; //
+  *table->chargeFactor = 0.0;                         // no contiene nungun elemento al principio
   table->type = type;
   return table;
 }
@@ -107,4 +106,3 @@ HashTable rehashTable(HashTable table, int type) {
 
   return newTable;
 }
-

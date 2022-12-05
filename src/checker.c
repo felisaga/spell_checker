@@ -64,7 +64,7 @@ RecommendationList searchRecommendations(RecommendationList list, char *word, Ha
     if(step == 1) {
       recommendations = splitWord(word, dictionary, step1Table, wordLen, &lenSuggestions, recommendations, line, step);
       recommendations = deleteLetters(word, dictionary, step1Table, wordLen, &lenSuggestions, recommendations, line, step);
-      recommendations = swtichLetters(word, dictionary, step1Table, wordLen, &lenSuggestions, recommendations, line, step);
+      recommendations = switchLetters(word, dictionary, step1Table, wordLen, &lenSuggestions, recommendations, line, step);
       recommendations = replaceLetters(word, dictionary, step1Table, wordLen, &lenSuggestions, recommendations, line, step);
       recommendations = insertLetters(word, dictionary, step1Table, wordLen, &lenSuggestions, recommendations, line, step);
     }
@@ -77,7 +77,7 @@ RecommendationList searchRecommendations(RecommendationList list, char *word, Ha
             int auxWordLen = aux->len;
             recommendations = splitWord(((WordPointer)(aux->elem))->word, dictionary, step2Table, auxWordLen, &lenSuggestions, recommendations, line, step);
             recommendations = deleteLetters(((WordPointer)(aux->elem))->word, dictionary, step2Table, auxWordLen, &lenSuggestions, recommendations, line, step);
-            recommendations = swtichLetters(((WordPointer)(aux->elem))->word, dictionary, step2Table, auxWordLen, &lenSuggestions, recommendations, line, step);
+            recommendations = switchLetters(((WordPointer)(aux->elem))->word, dictionary, step2Table, auxWordLen, &lenSuggestions, recommendations, line, step);
             recommendations = replaceLetters(((WordPointer)(aux->elem))->word, dictionary, step2Table, auxWordLen, &lenSuggestions, recommendations, line, step);
             recommendations = insertLetters(((WordPointer)(aux->elem))->word, dictionary, step2Table, auxWordLen, &lenSuggestions, recommendations, line, step);
             aux = aux->next;
@@ -85,7 +85,6 @@ RecommendationList searchRecommendations(RecommendationList list, char *word, Ha
         }
       }
     }
-
     if(step == 3) {
       for(unsigned int i = 0; i < step2Table->length && lenSuggestions < 5; i++) {
         if(step2Table->elems[i] != NULL) {
@@ -94,7 +93,7 @@ RecommendationList searchRecommendations(RecommendationList list, char *word, Ha
             int auxWordLen = aux->len;
             recommendations = splitWord(((WordPointer)(aux->elem))->word, dictionary, step2Table, auxWordLen, &lenSuggestions, recommendations, line, step);
             recommendations = deleteLetters(((WordPointer)(aux->elem))->word, dictionary, step2Table, auxWordLen, &lenSuggestions, recommendations, line, step);
-            recommendations = swtichLetters(((WordPointer)(aux->elem))->word, dictionary, step2Table, auxWordLen, &lenSuggestions, recommendations, line, step);
+            recommendations = switchLetters(((WordPointer)(aux->elem))->word, dictionary, step2Table, auxWordLen, &lenSuggestions, recommendations, line, step);
             recommendations = replaceLetters(((WordPointer)(aux->elem))->word, dictionary, step2Table, auxWordLen, &lenSuggestions, recommendations, line, step);
             recommendations = insertLetters(((WordPointer)(aux->elem))->word, dictionary, step2Table, auxWordLen, &lenSuggestions, recommendations, line, step);
             aux = aux->next;

@@ -16,7 +16,11 @@ char** splitWord(char *word, HashTable dictionary, HashTable stepTable, int word
       part1[i] = ' ';
       memcpy(part1+i+1, word+i, wordLen-i);
       part1[wordLen+1] = '\0';
-      recommendations = addWordToReccomendation(recommendations, part1, lenRecommendations);
+      if(!inReccomendations(recommendations, *lenRecommendations, part1)) {
+        recommendations = addWordToReccomendation(recommendations, part1, lenRecommendations);
+      } else {
+        free(part1);
+      }
     } else {
       free(part1);
     }
@@ -26,20 +30,17 @@ char** splitWord(char *word, HashTable dictionary, HashTable stepTable, int word
 
 char** deleteLetters(char *word, HashTable dictionary, HashTable stepTable, int wordLen, int *lenRecommendations, char **recommendations, int line, int step) {
   for(int i = 0; i < wordLen && (*lenRecommendations) < 5; i++) {
-    char *sample = malloc(sizeof(char) * (wordLen+1));
-    // memcpy(sample, word, i);
-    // memcpy(sample + i , word + i + 1, wordLen - (i + 1));
-    // sample[wordLen - 1] = '\0';
+    char *sample = malloc(sizeof(char) * (wordLen+2));
     for (int j = 0; j < wordLen; j++)
         if (j < i)
             sample[j] = word[j];
         else
             sample[j] = word[j + 1];
     sample[wordLen] = '\0';
-    if(inDictionary(dictionary, sample, wordLen-1)) {
+    if(inDictionary(dictionary, sample, wordLen-1) && !inReccomendations(recommendations, *lenRecommendations, sample)) {
       recommendations = addWordToReccomendation(recommendations, sample, lenRecommendations);
       if(step != 3) {
-      char *copy = malloc(sizeof(char) * (wordLen+1));
+      char *copy = malloc(sizeof(char) * (wordLen+2));
       strcpy(copy, sample);
       stepTable = addWordToTable(stepTable, copy, wordLen-1, 0);
       }
@@ -54,18 +55,18 @@ char** deleteLetters(char *word, HashTable dictionary, HashTable stepTable, int 
   return recommendations;
 }
 
-char** swtichLetters(char *word, HashTable dictionary, HashTable stepTable, int wordLen, int *lenRecommendations, char **recommendations, int line, int step) {
+char** switchLetters(char *word, HashTable dictionary, HashTable stepTable, int wordLen, int *lenRecommendations, char **recommendations, int line, int step) {
   for(int i = 0; i < (wordLen - 1) && (*lenRecommendations) < 5; i++) {
     char c = word[i];
-    char *sample = malloc(sizeof(char) * (wordLen+1));
+    char *sample = malloc(sizeof(char) * (wordLen+2));
     memcpy(sample, word, wordLen);
     sample[i] = word[i+1];
     sample[i+1] = c;
     sample[wordLen] = '\0';
-    if(inDictionary(dictionary, sample, wordLen-1)) {
+    if(inDictionary(dictionary, sample, wordLen) && !inReccomendations(recommendations, *lenRecommendations, sample)) {
       recommendations = addWordToReccomendation(recommendations, sample, lenRecommendations);
       if(step != 3) {
-      char *copy = malloc(sizeof(char) * (wordLen+1));
+      char *copy = malloc(sizeof(char) * (wordLen+2));
       strcpy(copy, sample);
       stepTable = addWordToTable(stepTable, copy, wordLen, 0);
       }
@@ -83,14 +84,14 @@ char** swtichLetters(char *word, HashTable dictionary, HashTable stepTable, int 
 char** replaceLetters(char *word, HashTable dictionary, HashTable stepTable, int wordLen, int *lenRecommendations, char **recommendations, int line, int step) {
   for(int i = 0; i < wordLen && (*lenRecommendations) < 5; i++) {
     for(char c = 'a'; c <= 'z' && (*lenRecommendations) < 5 ; c++) {
-      char *sample = malloc(sizeof(char) * (wordLen+1));
+      char *sample = malloc(sizeof(char) * (wordLen+2));
       strcpy(sample, word);
       sample[i] = c;
       sample[wordLen] = '\0';
-      if(inDictionary(dictionary, sample, wordLen)) {
+      if(inDictionary(dictionary, sample, wordLen) && !inReccomendations(recommendations, *lenRecommendations, sample)) {
         recommendations = addWordToReccomendation(recommendations, sample, lenRecommendations);
         if(step != 3) {
-        char *copy = malloc(sizeof(char) * (wordLen+1));
+        char *copy = malloc(sizeof(char) * (wordLen+2));
         strcpy(copy, sample);
         stepTable = addWordToTable(stepTable, copy, wordLen, 0);
         }
@@ -114,7 +115,7 @@ char** insertLetters(char *word, HashTable dictionary, HashTable stepTable, int 
       memcpy(sample + i + 1, word + i, wordLen - i);
       sample[i] = c;
       sample[wordLen + 1] = '\0';
-      if(inDictionary(dictionary, sample, wordLen-1)) {
+      if(inDictionary(dictionary, sample, wordLen+1) && !inReccomendations(recommendations, *lenRecommendations, sample)) {
         recommendations = addWordToReccomendation(recommendations, sample, lenRecommendations);
         if(step != 3) {
         char *copy = malloc(sizeof(char) * (wordLen+2));

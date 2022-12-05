@@ -157,3 +157,12 @@ void deleteRecommendations(RecommendationList list) {
   deleteRecommendations(list->next);
   free(list);
 }
+
+int inReccomendations(char **array, int arrayLen, char* word) {
+  for (int i = 0; i < arrayLen; i++) {
+    if(strcmp(array[i], word) == 0) {
+      return 1;
+    }
+  }
+  return 0;
+}

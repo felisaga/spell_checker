@@ -1,6 +1,8 @@
 {
   "files.associations": {
     "suggestions.h": "c",
-    "hash.h": "c"
+    "hash.h": "c",
+    "stdlib.h": "c",
+    "words.h": "c"
   }
 }

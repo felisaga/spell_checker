@@ -14,7 +14,7 @@ char** deleteLetters(char *word, HashTable dictionary, HashTable stepTable, int 
 
 // Dada una palabra intenta encontrar sugerencias intercambiando cada par de letras adyacentes de la palabra
 // switchLetters: (char*, HashTable, HashTable, int, int*, char**, int, int) -> char**
-char** swtichLetters(char *word, HashTable dictionary, HashTable stepTable, int wordLen, int *lenRecommendations, char **recommendations, int line, int step);
+char** switchLetters(char *word, HashTable dictionary, HashTable stepTable, int wordLen, int *lenRecommendations, char **recommendations, int line, int step);
 
 // Dada una palabra intenta encontrar sugerencias reemplazando cada letra de la palabra por una entre la 'a' y la 'z'
 // replaceLetters: (char*, HashTable, HashTable, int, int*, char**, int, int) -> char**

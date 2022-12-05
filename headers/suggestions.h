@@ -70,5 +70,8 @@ char** addWordToReccomendation(char **recommedations, char *word, int *lenRecomm
 // deleteRecommendations: (RecommendationList) -> ()
 void deleteRecommendations(RecommendationList list);
 
+// Se fija si una palabra ya esta en la lista de recomendaciones para no agregar las repetidas
+// inReccomendations: (char**, int, char*) -> int
+int inReccomendations(char **array, int arrayLen, char* word);
 
 #endif
