@@ -73,29 +73,6 @@ void test_addSuggestionToTable() {
   deleteTable(t, 1);
 }
 
-void test_addSuggestion() {
-  char **array = malloc(sizeof(char*));
-  char *sug1 = malloc(sizeof(char) * 5);
-  sug1[0] = 'h';
-  sug1[1] = 'o';
-  sug1[2] = 'l';
-  sug1[3] = 'a';
-  sug1[4] = '\0';
-  array[0] = sug1;
-  char *word = malloc(sizeof(char) * 5);
-  word[0] = 'h';
-  word[1] = 'o';
-  word[2] = 'y';
-  word[3] = 'o';
-  word[4] = '\0';
-  array = addSuggestion(array, word, 1);
-  assert(strcmp(array[0], "hola") == 0);
-  assert(strcmp(array[1], "hoyo") == 0);
-  free(array);
-  free(sug1);
-  free(word);
-}
-
 void test_inSuggestions() {
   SuggestionPointer suggs = NULL;
   HashTable suggestions = createHashTable(INITIAL_DICC_LENGTH, 1);
@@ -208,7 +185,6 @@ int main() {
   test_createSuggestion();
   test_addSuggestionToList();
   test_addSuggestionToTable();
-  test_addSuggestion();
   test_inSuggestions();
   test_inSuggestionList();
   test_addToRecommendations();

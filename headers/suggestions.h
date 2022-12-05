@@ -42,10 +42,6 @@ HashTable addSuggestionToTable(HashTable table, char *word, char **suggestions, 
 // deleteSuggestions: (SuggestionPointer) -> ()
 void deleteSuggestions(SuggestionPointer elem);
 
-// Agrega una sugerencia a la lista de sugerencias
-// addSuggestion: (char **, char*, int) -> char**
-char** addSuggestion(char **suggestions, char* suggestion, int len);
-
 // Se fija si una palabra tiene sugerencias en la tabla
 // inSuggestions: (HashTable, char*, int) -> SuggestionPointer
 SuggestionPointer inSuggestions(HashTable suggestions, char *word, int wordLen);

@@ -22,7 +22,7 @@ HashTable readDictionary(HashTable table, char* path) {
     if(c != '\n' && c != EOF && c != 13) {
       if(c != 10) wordBuff[i++] = tolower(c);
     }
-    else {                               //10 inicio de linea
+    else {                                            //10 inicio de linea
       wordBuff[i] = '\0';
       char *word = malloc(sizeof(char) * (i + 1));
       strcpy(word, wordBuff);
@@ -43,17 +43,19 @@ HashTable readSuggestions(HashTable table, char* path) {
     deleteTable(table, 1);
     return NULL;
   }
-  int i = 0, flag = 1, wordFlag = 1, len = 0, wordLen = 0;
+  int i = 0, flag = 1, wordFlag = 1, len = 0, wordLen = 0, numberFlag = 1, suggLen = 0, counter = 0;
   char wordBuff[MAX_WORD_LENGTH], c;
-  char **array = calloc(1,sizeof(char*));
+  char **array = NULL;
   char *word = malloc(sizeof(char));
 
   while(flag) {
     c = getc(f);
-    if(c != ',' && c != '\n' && c != 13 && c != EOF && c != 10) {
+    if(c == 10 && i == 0) continue;
+    if(c == EOF && i == 0) {free(word); break;}
+    if(c != ',' && c != '\n' && c != 13 && c != EOF && c != 10) { //10 inicio de linea - 13 retorno de linea
       if(c == ' ' && i != 0) wordBuff[i++] = c;       //para evitar los espacios despues de la coma
       else if(c != ' ') wordBuff[i++] = c;
-    } else if (c != ' ') {                            //10 inicio de linea - 13 retorno de linea //' ' despues de la coma
+    } else if (c != ' ' && i != 0) {                            //' ' despues de la coma
       wordBuff[i] = '\0';
       if(wordFlag) {
         word = realloc(word, sizeof(char) * (i + 1));
@@ -61,26 +63,36 @@ HashTable readSuggestions(HashTable table, char* path) {
         wordLen = i + 1;
         i = 0;
         wordFlag = 0;
-      } else {
+      } else if (numberFlag && !wordFlag) {
+        char *aux = malloc(sizeof(char) * (i + 1));
+        strcpy(aux, wordBuff);
+        suggLen = atoi(aux);
+        free(aux);
+        array = malloc(sizeof(char*) * suggLen);
+        i = 0;
+        numberFlag = 0;
+      } else if(!numberFlag && !wordFlag) {
         char *sugg = malloc(sizeof(char) * (i + 1));
         strcpy(sugg, wordBuff);
-        array = addSuggestion(array, sugg, len);
+        array[counter] = sugg;
+        counter++;
         len ++;
         i = 0;
       }
     }
     if(c == '\n' || c == 13 || c == 10 || c == EOF) { //si encuentra un \n o retorno de carro
-      table = addSuggestionToTable(table, word, array, len, wordLen-1, 1);
+      table = addSuggestionToTable(table, word, array, suggLen, wordLen-1, 1);
       len = 0;
+      suggLen = 0;
+      counter = 0;
       wordFlag = 1;
+      numberFlag = 1;
       word = malloc(sizeof(char));                    //para las siguientes sugerencias que pueda haber
-      array = calloc(1,sizeof(char*));
+      array = NULL;
     } 
     if(c == EOF) {
       flag = 0;
-      free(word);                                     //si no hay mas sugerencias
-      free(array[0]);
-      free(array);
+      free(word);                                    //si no hay mas sugerencias
     }
   }
   fclose(f);
@@ -97,7 +109,7 @@ void printRecommendations(RecommendationList list, char *oputputFile, char *sugg
     if(aux->recommendations == NULL) {
       fprintf(corrections, "\nNo se encontraron sugerencias.\n");
     } else {
-      if(aux->new) fprintf(suggestions, "\n%s, ", aux->word);
+      if(aux->new) fprintf(suggestions, "\n%s, %d, ", aux->word, aux->lenRecommendations);
       fprintf(corrections, "\nQuizas quiso decir: ");
       for (int i = 0; i < aux->lenRecommendations-1; i++) {
         fprintf(corrections,"%s, ", aux->recommendations[i]);

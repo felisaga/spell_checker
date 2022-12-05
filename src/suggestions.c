@@ -67,17 +67,6 @@ void deleteSuggestions(SuggestionPointer elem) {
   free(elem->word);
 }
 
-char** addSuggestion(char **suggestions, char* suggestion, int len) {
-  if(suggestions[0] == NULL) {
-    suggestions[len] = suggestion;
-    return suggestions;
-  } else {
-    char **array = realloc(suggestions, sizeof(char*) * (len + 1));
-    array[len] = suggestion;
-    return array;
-  }
-}
-
 SuggestionPointer inSuggestions(HashTable suggestions, char *word, int wordLen) {
   unsigned int hash = murmur3_32(word, wordLen);
   unsigned int index = hash % suggestions->length;

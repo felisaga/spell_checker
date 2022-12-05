@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) { // argv = [ejecutable, archivo de entrada, ar
   RecommendationList recommendations = checkSpell(argv[1], dictionary, &suggestions);
 
   printRecommendations(recommendations, argv[2], argv[4]);
-  
+
   deleteTable(dictionary, 0);
   deleteTable(suggestions, 1);
   deleteRecommendations(recommendations);
