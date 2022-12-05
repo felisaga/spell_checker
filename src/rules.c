@@ -25,19 +25,17 @@ char** splitWord(char *word, HashTable dictionary, HashTable stepTable, int word
 }
 
 char** deleteLetters(char *word, HashTable dictionary, HashTable stepTable, int wordLen, int *lenRecommendations, char **recommendations, int line, int step) {
-    // printf("%s\n", word);
   for(int i = 0; i < wordLen && (*lenRecommendations) < 5; i++) {
     char *sample = malloc(sizeof(char) * (wordLen+1));
     // memcpy(sample, word, i);
     // memcpy(sample + i , word + i + 1, wordLen - (i + 1));
     // sample[wordLen - 1] = '\0';
-
-        for (int j = 0; j < wordLen; j++)
-            if (j < i)
-                sample[j] = word[j];
-            else
-                sample[j] = word[j + 1];
-        sample[wordLen] = '\0';
+    for (int j = 0; j < wordLen; j++)
+        if (j < i)
+            sample[j] = word[j];
+        else
+            sample[j] = word[j + 1];
+    sample[wordLen] = '\0';
     if(inDictionary(dictionary, sample, wordLen-1)) {
       recommendations = addWordToReccomendation(recommendations, sample, lenRecommendations);
       if(step != 3) {
@@ -47,7 +45,6 @@ char** deleteLetters(char *word, HashTable dictionary, HashTable stepTable, int 
       }
     } else {
       if(step != 3) {
-        // printf("biennnn!!!|%s|\n", sample);
         stepTable = addWordToTable(stepTable, sample, wordLen-1, 0);
       } else {
         free(sample);
@@ -87,7 +84,6 @@ char** replaceLetters(char *word, HashTable dictionary, HashTable stepTable, int
   for(int i = 0; i < wordLen && (*lenRecommendations) < 5; i++) {
     for(char c = 'a'; c <= 'z' && (*lenRecommendations) < 5 ; c++) {
       char *sample = malloc(sizeof(char) * (wordLen+1));
-      // memcpy(sample, word, wordLen);
       strcpy(sample, word);
       sample[i] = c;
       sample[wordLen] = '\0';
@@ -98,7 +94,6 @@ char** replaceLetters(char *word, HashTable dictionary, HashTable stepTable, int
         strcpy(copy, sample);
         stepTable = addWordToTable(stepTable, copy, wordLen, 0);
         }
-        // free(sample);
       } else {
         if(step != 3) {
           stepTable = addWordToTable(stepTable, sample, wordLen, 0);

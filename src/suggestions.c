@@ -46,6 +46,9 @@ List addSuggestionToList(List list, char *word, char **suggestions, int suggesti
 }
 
 HashTable addSuggestionToTable(HashTable table, char *word, char **suggestions, int suggestionsLen, int wordLen, int type) {
+  if(table == NULL) {
+    table = createHashTable(INITIAL_SUGG_LENGTH, 1);
+  }
   // printf("tiene sugerencias|%s|\n", word);
   unsigned int hash = murmur3_32(word, wordLen);
   unsigned int index = hash % table->length;
@@ -81,21 +84,6 @@ char** addSuggestion(char **suggestions, char* suggestion, int len) {
 }
 
 SuggestionPointer inSuggestions(HashTable suggestions, char *word, int wordLen) {
-  // for(int i=0; i<suggestions->length;i++) {
-  //   if(suggestions->elems[i] != NULL) {
-  //     List aux = suggestions->elems[i];
-  //     while (aux != NULL) {
-  //     // printf("palabra: |%s|\n", ((SuggestionPointer)(suggestions->elems[i]->elem))->word);
-  //     printf("palabra: |%s|\n", ((SuggestionPointer)(aux->elem))->word);
-  //     printf("sugerencias: ");
-  //     for (int j = 0; j < ((SuggestionPointer)(aux->elem))->lenSuggestions; j++) {
-  //       printf("|%s|, ", ((SuggestionPointer)(aux->elem))->suggestions[j]);
-  //     }
-  //     printf("\n");
-  //     aux = aux->next;
-  //     }
-  //   }
-  // }
   unsigned int hash = murmur3_32(word, wordLen);
   unsigned int index = hash % suggestions->length;
   // printf("%s-%d//%d-%d len:%d\n", word, index, hash, suggestions->length, wordLen);

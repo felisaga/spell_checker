@@ -7,7 +7,6 @@
 #include "../headers/words.h"
 #include "../headers/suggestions.h"
 
-// cambiar este tipo a unsigned int y uint8 a char
 uint32_t murmur3_32(char *key, uint32_t len) {
   static const uint32_t c1 = 0xcc9e2d51;
   static const uint32_t c2 = 0x1b873593;
@@ -16,7 +15,7 @@ uint32_t murmur3_32(char *key, uint32_t len) {
   static const uint32_t m = 5;
   static const uint32_t n = 0xe6546b64;
 
-  uint32_t hash = 5381; //nro primo
+  uint32_t hash = 5381; // un nro primo
 
   const int nblocks = len / 4;
   const uint32_t *blocks = (const uint32_t *) key;
@@ -71,17 +70,11 @@ HashTable createHashTable(unsigned int len, int type) {
 
 void deleteTable(HashTable table, int type) {
   for(int i = 0; i < table->length; i++) {
-    // printf("1\n");
     deleteList(table->elems[i], type);
-    // printf("2\n");
   }
-  // printf("3\n");
   free(table->elems);
-  // printf("4\n");
   free(table->chargeFactor);
-  // printf("5\n");
   free(table);
-  // printf("6\n");
 }
 
 HashTable rehashTable(HashTable table, int type) {

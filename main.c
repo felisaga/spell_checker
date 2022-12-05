@@ -12,7 +12,6 @@
 int main(int argc, char *argv[]) { // argv = [ejecutable, archivo de entrada, archivo de salida, diccionario, sugerencias]
   HashTable dictionary = createHashTable(INITIAL_DICC_LENGTH, 0);
   dictionary = readDictionary(dictionary, argv[3]);
-
   if (dictionary == NULL) { // si no se puede abrir el archivo diccionario termina el programa
     return 0;
   }
@@ -37,12 +36,7 @@ int main(int argc, char *argv[]) { // argv = [ejecutable, archivo de entrada, ar
 
   HashTable suggestions = createHashTable(INITIAL_SUGG_LENGTH, 1);
   suggestions = readSuggestions(suggestions, argv[4]);
-
-  RecommendationList recommendations = checkSpell(argv[1], dictionary, suggestions);
-
-  // if (suggestions == NULL) { // si no se puede abrir el archivo con sugerencias termina el programa
-  //   return 0;
-  // }
+  RecommendationList recommendations = checkSpell(argv[1], dictionary, &suggestions);
 
   // RecommendationList aux = recommendations;
     
@@ -58,7 +52,6 @@ int main(int argc, char *argv[]) { // argv = [ejecutable, archivo de entrada, ar
   //     aux = aux->next;
   //   }
 
-  printRecommendations(recommendations, argv[4]);  
 
   // if(recommendations != NULL) free(recommendations);
   // printf("_________________________________\n");
@@ -99,7 +92,7 @@ int main(int argc, char *argv[]) { // argv = [ejecutable, archivo de entrada, ar
   //     }
   //   }
   // }
-  // printf("antes de sugg\n");
+  printRecommendations(recommendations, argv[2], argv[4]);
   deleteTable(dictionary, 0);
   deleteTable(suggestions, 1);
   deleteRecommendations(recommendations);

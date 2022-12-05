@@ -3,16 +3,16 @@
 #include <string.h>
 #include <ctype.h>
 
-// #include "../headers/hash.h"
 #include "../headers/words.h"
 #include "../headers/suggestions.h"
 #include "../headers/io.h"
 
 HashTable readDictionary(HashTable table, char* path) {
-	FILE *f = fopen("./dictionary.txt", "rb");
-  if (f == NULL) { // si no se puede abrir el diccionario devuelvo NULL
+	FILE *f = fopen(path, "rb");
+  if (f == NULL) { 
 		printf("Error al abrir el diccionario.\n");
-    return NULL;
+    deleteTable(table, 0);
+    return NULL;                                      // si no se puede abrir el diccionario devuelvo NULL
   }
   int i = 0, flag = 1;
   char wordBuff[MAX_WORD_LENGTH], c;
@@ -22,8 +22,7 @@ HashTable readDictionary(HashTable table, char* path) {
     if(c != '\n' && c != EOF && c != 13) {
 		  wordBuff[i++] = tolower(c);
     }
-    // if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) wordBuff[i++] = tolower(c);
-    else if (c != 10) {//10 inicio de linea
+    else if (c != 10) {                               //10 inicio de linea
       wordBuff[i] = '\0';
       char *word = malloc(sizeof(char) * (i + 1));
       strcpy(word, wordBuff);
@@ -38,9 +37,10 @@ HashTable readDictionary(HashTable table, char* path) {
 }
 
 HashTable readSuggestions(HashTable table, char* path) {
-  FILE *f = fopen("./suggestions.txt", "rb");
-  if (f == NULL) { // si no se puede abrir el archivo de sugerencias devuelvo NULL
-		printf("Error al abrir el archivo de sugerencias.\n");
+  FILE *f = fopen(path, "rb");
+  if (f == NULL) {                                    // si no se puede abrir el archivo de sugerencias devuelvo NULL
+		printf("No hay sugerencias previas sugerencias.\n");
+    deleteTable(table, 1);
     return NULL;
   }
   int i = 0, flag = 1, wordFlag = 1, len = 0, wordLen = 0;
@@ -69,7 +69,6 @@ HashTable readSuggestions(HashTable table, char* path) {
         i = 0;
       }
     }
-    // else {
     if(c == '\n' || c == 13 || c == 10 || c == EOF) { //si encuentra un \n o retorno de carro
       table = addSuggestionToTable(table, word, array, len, wordLen-1, 1);
       len = 0;
@@ -88,10 +87,10 @@ HashTable readSuggestions(HashTable table, char* path) {
   return table;
 }
 
-void printRecommendations(RecommendationList list, char *path) {
+void printRecommendations(RecommendationList list, char *oputputFile, char *suggestionsFile) {
   if(list == NULL) return;
-  FILE *corrections = fopen("./corrections.txt", "w");
-  FILE *suggestions = fopen(path, "a+");
+  FILE *corrections = fopen(oputputFile, "w");
+  FILE *suggestions = fopen(suggestionsFile, "a+");
   RecommendationList aux = list;
   while (aux != NULL) {
     fprintf(corrections, "Linea %d, \"%s\" no esta en el diccionario.", aux->line, aux->word);
@@ -112,8 +111,3 @@ void printRecommendations(RecommendationList list, char *path) {
   fclose(corrections);
   fclose(suggestions);
 }
-
-// void printNewSuggestions(RecommendationList list, char *path) {
-//   FILE *f = fopen(path, "a+");
-//   fclose(f);
-// }

@@ -4,8 +4,13 @@
 #include "./hash.h"
 #include "./suggestions.h"
 
-RecommendationList checkSpell(char *path, HashTable dictionary, HashTable suggestions); // si es null es porque no se abrio el archivo o no hay recomendaciones
+// A partir de un archivo de texto a cada palabra que este mal escrita le intenta encontrar
+// posibles sugerencias de correcciones
+// chackSpell: (char*, HashTable, HashTable*) -> RecommendationList
+RecommendationList checkSpell(char *path, HashTable dictionary, HashTable *suggestions);
 
-RecommendationList searchRecommendations(RecommendationList list, char *word, HashTable dictionary, int wordLen, int line, HashTable suggestions);
+// Dada una palabra le intenta buscar a lo sumo 5 sugerencias de palabras que si esten en el diccionario
+// searchRecommendations: (RecommendationList, char*, HashTable, int, int, HashTable*) -> RecommendationList
+RecommendationList searchRecommendations(RecommendationList list, char *word, HashTable dictionary, int wordLen, int line, HashTable *suggestions);
 
 #endif
