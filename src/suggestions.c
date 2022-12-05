@@ -49,10 +49,8 @@ HashTable addSuggestionToTable(HashTable table, char *word, char **suggestions, 
   if(table == NULL) {
     table = createHashTable(INITIAL_SUGG_LENGTH, 1);
   }
-  // printf("tiene sugerencias|%s|\n", word);
   unsigned int hash = murmur3_32(word, wordLen);
   unsigned int index = hash % table->length;
-  // printf("|%s-%d//%d-%d|len:%d\n", word, index, hash, table->length,wordLen);
   table->elems[index] = addSuggestionToList(table->elems[index], word, suggestions, suggestionsLen, wordLen, hash, table->chargeFactor, table->length);
 
   if(*(table->chargeFactor) > 0.7) table = rehashTable(table, type);
@@ -62,10 +60,7 @@ HashTable addSuggestionToTable(HashTable table, char *word, char **suggestions, 
 
 void deleteSuggestions(SuggestionPointer elem) {
   for(int i=0; i < elem->lenSuggestions; i++) {
-    // printf("%s\n", elem->suggestions[i]);
     free(elem->suggestions[i]);
-    // printf("%s\n", elem->suggestions[i]);
-
   }
 
   free(elem->suggestions);
@@ -86,7 +81,6 @@ char** addSuggestion(char **suggestions, char* suggestion, int len) {
 SuggestionPointer inSuggestions(HashTable suggestions, char *word, int wordLen) {
   unsigned int hash = murmur3_32(word, wordLen);
   unsigned int index = hash % suggestions->length;
-  // printf("%s-%d//%d-%d len:%d\n", word, index, hash, suggestions->length, wordLen);
 
   if(suggestions->elems[index] == NULL) {
     return NULL;
@@ -161,6 +155,5 @@ void deleteRecommendations(RecommendationList list) {
     return;
   }
   deleteRecommendations(list->next);
-  // if(list->new == 1) free(list->word);
   free(list);
 }
