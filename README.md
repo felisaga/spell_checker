@@ -23,6 +23,7 @@ palabra3
 Las sugerencias deben tener el siguiente formato:
 
 Palabra, nro_sugerencias, sugerencia_1, ..., sugerencia_n
+
 ...
 
 Para compilar el programa usar:
