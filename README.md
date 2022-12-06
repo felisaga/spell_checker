@@ -49,4 +49,4 @@ Y para correr individualmente cada test usar
 ```
 make [parte]_test
 ```
-Donde [parte] puede ser "rules", "io", "checker", "hash", "words", "suggestions",
+Donde [parte] puede ser "rules", "io", "checker", "hash", "words", "suggestions".
