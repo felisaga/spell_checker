@@ -33,7 +33,6 @@ void *createSuggestion(char *word, char **suggestions, int suggestionsLen);
 // addSuggestionToList: (List, char*, char **, int, int, unsigned int, floar*, int) -> List
 List addSuggestionToList(List list, char *word, char **suggestions, int suggestionsLen, int wordLen, unsigned int hash, float *chargeFactor, int tableLength);
 
-
 // Agrega una nueva sugerencia a una tabla de sugerencias
 // addSuggestionToTable: (HashTable, char*, char**, int, int, int) -> HashTable
 HashTable addSuggestionToTable(HashTable table, char *word, char **suggestions, int suggestionsLen, int wordLen, int type);
@@ -60,7 +59,7 @@ void freeRecommendations(RecommendationList list);
 
 // Agrega una palabra al array de recomendaciones o lo crea si no existe y le agrega la palabra
 // addWordToRecommendation: (char**, char*, int*) -> char**
-char** addWordToReccomendation(char **recommedations, char *word, int *lenRecommendations);
+char** addWordToReccomendation(char **recommendations, char *word, int *lenRecommendations);
 
 // Libera la memoria utilizada por una lista de recomendaciones
 // deleteRecommendations: (RecommendationList) -> ()

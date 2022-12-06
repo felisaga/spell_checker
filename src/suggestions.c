@@ -128,15 +128,15 @@ void freeRecommendations(RecommendationList list) {
   }
 }
 
-char** addWordToReccomendation(char **recommedations, char *word, int *lenRecommendations) {
-  if(recommedations == NULL) {
-    recommedations = malloc(sizeof(char*));
+char** addWordToReccomendation(char **recommendations, char *word, int *lenRecommendations) {
+  if(recommendations == NULL) {
+    recommendations = malloc(sizeof(char*));
   } else {
-    recommedations = realloc(recommedations, sizeof(char*) * ((*lenRecommendations)+1));
+    recommendations = realloc(recommendations, sizeof(char*) * ((*lenRecommendations)+1));
   }
-  recommedations[(*lenRecommendations)] = word;
-  (*lenRecommendations)++;
-  return recommedations;
+  recommendations[(*lenRecommendations)] = word;
+  (*lenRecommendations)++;  
+  return recommendations;
 }
 
 void deleteRecommendations(RecommendationList list) {

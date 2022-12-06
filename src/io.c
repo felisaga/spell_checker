@@ -39,7 +39,7 @@ HashTable readDictionary(HashTable table, char* path) {
 HashTable readSuggestions(HashTable table, char* path) {
   FILE *f = fopen(path, "rb");
   if (f == NULL) {                                    // si no se puede abrir el archivo de sugerencias devuelvo NULL
-		printf("No hay sugerencias previas sugerencias.\n");
+		printf("No hay sugerencias previas.\n");
     deleteTable(table, 1);
     return NULL;
   }

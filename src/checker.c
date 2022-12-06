@@ -30,7 +30,7 @@ RecommendationList checkSpell(char *path, HashTable dictionary, HashTable *sugge
 		  wordBuff[i++] = tolower(c);
     } else if(i != 0) {      
       wordBuff[i] = '\0';
-      char *word = malloc(sizeof(char) * i + 1);
+      char *word = malloc(sizeof(char) * (i + 1));
       strcpy(word, wordBuff);
 
       if(sugg && (recommendations = inSuggestions((*suggestions), word, i)) != NULL) {
@@ -39,11 +39,11 @@ RecommendationList checkSpell(char *path, HashTable dictionary, HashTable *sugge
       } else {
         if(!inDictionary(dictionary, word, i)) {
           list = searchRecommendations(list, word, dictionary, i, line, suggestions);
+          sugg = 1;
         } else {
           free(word);
         }
       }
-
       i=0;
       if (c == '\n') line++;
     }
@@ -103,12 +103,7 @@ RecommendationList searchRecommendations(RecommendationList list, char *word, Ha
   }
   deleteTable(step1Table, 0);
   deleteTable(step2Table, 0);
-  if (recommendations != NULL) {
-    list = addToRecommendations(list, word, recommendations, lenSuggestions, line, 1);
-    *suggestions = addSuggestionToTable((*suggestions), word, recommendations, lenSuggestions, wordLen, 1);
-  } else {
-    list = addToRecommendations(list, word, recommendations, lenSuggestions, line, 1);
-    *suggestions = addSuggestionToTable(*suggestions, word, recommendations, lenSuggestions, wordLen, 1);
-  }
+  list = addToRecommendations(list, word, recommendations, lenSuggestions, line, 1);
+  *suggestions = addSuggestionToTable(*suggestions, word, recommendations, lenSuggestions, wordLen, 1);
   return list;
 }
