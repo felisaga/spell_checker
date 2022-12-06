@@ -38,7 +38,7 @@ void test_addWordToTable() {
   word[3] = 'a';
   word[4] = '\0';
   t = addWordToTable(t, word, 4, 0);
-  assert(strcmp(((WordPointer)(t->elems[91312]->elem))->word, "hola") == 0);
+  assert(strcmp(((WordPointer)(t->elems[191312]->elem))->word, "hola") == 0);
   deleteTable(t, 0);
 }
 

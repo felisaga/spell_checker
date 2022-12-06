@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define INITIAL_DICC_LENGTH 100000
+#define INITIAL_DICC_LENGTH 1000000
 #define INITIAL_SUGG_LENGTH 10000
 
 // Estructura de los elementos que van en la tabla hash
