@@ -11,6 +11,7 @@ Para utilizar el programa es necesario tener en el mismo directorio un archivo "
 De manera opcional se puede tener un archivo de sugerencias "suggestions.txt".
 
 El diccionario tiene que tener el siguiente formato:
+
 palabra1
 
 palabra2
