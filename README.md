@@ -12,11 +12,15 @@ De manera opcional se puede tener un archivo de sugerencias "suggestions.txt".
 
 El diccionario tiene que tener el siguiente formato:
 palabra1
+
 palabra2
+
 palabra3
+
 ...
 
 Las sugerencias deben tener el siguiente formato:
+
 Palabra, nro_sugerencias, sugerencia_1, ..., sugerencia_n
 ...
 
