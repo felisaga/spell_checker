@@ -22,7 +22,7 @@ HashTable readDictionary(HashTable table, char* path) {
     if(c != '\n' && c != EOF && c != 13) {
       if(c != 10) wordBuff[i++] = tolower(c);
     }
-    else {                                            //10 inicio de linea
+    else if (i > 0) {                                            //para evitar un diccionario vacio
       wordBuff[i] = '\0';
       char *word = malloc(sizeof(char) * (i + 1));
       strcpy(word, wordBuff);

@@ -14,7 +14,6 @@ RecommendationList checkSpell(char *path, HashTable dictionary, HashTable *sugge
   FILE *f = fopen(path, "rb");
   if (f == NULL) { // si no se puede abrir el texto devuelvo NULL
 		printf("Error al abrir el archivo de texto.\n");
-    fclose(f);
     return NULL;
   }
   int i = 0, line = 1, sugg = 1, flag=1;
